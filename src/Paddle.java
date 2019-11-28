@@ -17,8 +17,8 @@ public class Paddle extends Sprite {
 	
 	void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_LEFT) dx = -1;
-        else if (key == KeyEvent.VK_RIGHT) dx = 1;
+        if (key == KeyEvent.VK_LEFT) dx = -4;
+        else if (key == KeyEvent.VK_RIGHT) dx = 4;
     }
 
     void keyReleased(KeyEvent e) {

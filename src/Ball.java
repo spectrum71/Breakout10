@@ -36,7 +36,7 @@ public class Ball extends Sprite {
 	@Override
 	public void drawSprite(Graphics g) {
 		// TODO Auto-generated method stub
-		g.setColor(Color.CYAN);
+		g.setColor(Color.BLACK);
 		g.fillOval(getX(), getY(), BALL_DIAMETER, BALL_DIAMETER);
 	}
 	

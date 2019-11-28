@@ -8,6 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final int BOARD_WIDTH = 300;
 	private static final int BOARD_HEIGHT = 400;
 	private Ball ball;
@@ -15,19 +19,15 @@ public class Board extends JPanel implements ActionListener {
 	private PaddleController controller;
 	private Timer timer;
 	private Brick[] bricks;
-	private boolean inGame;
-	private boolean victory;
 	private Status scoreboard;
 	
 	public Board() {
-		inGame = true;
-		victory = false;
 		scoreboard = new Status();
 		initTimer();
 		createComponents();
 		setFocusable(true);
 		setLayout(new BorderLayout());
-        add("South", scoreboard);
+        add("North", scoreboard);
 		setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
         timer.start();
 	}
@@ -85,10 +85,21 @@ public class Board extends JPanel implements ActionListener {
 	public void doGameCycle() {
 		ball.move();
 		paddle.move();
+		checkBricks();
 		checkCollisions();
 		repaint();
 	}
 	
+	public void checkBricks() {
+		boolean allDestroyed = true;
+		for (Brick brick: bricks) {
+			if (!brick.isDestroyed()) allDestroyed = false;
+		}
+		if (allDestroyed) {
+			scoreboard.victory();
+			stopGame();
+		}
+	}
 	public void checkCollisions() {
 		checkFallBall();
 		checkBrickHit();
@@ -128,19 +139,12 @@ public class Board extends JPanel implements ActionListener {
 	
 	public void checkPaddleHit() {
 		if(ball.getCollisionArea().intersects(paddle.getCollisionArea())) {
-			double leftPaddle = paddle.getCollisionArea().getMinX();
-			double rightPaddle = paddle.getCollisionArea().getMaxX();
-			double centerBall = ball.getCollisionArea().getCenterX();
-			int threshold = (int)(paddle.getWidth()/4);
 			ball.horizontalBounce();
-			if (centerBall > rightPaddle-threshold*2) ball.setDx(2);
-			else if (centerBall < leftPaddle+threshold*2) ball.setDx(-2);
-			else ball.setDx((int)(Math.signum(ball.getDx())));
 		}
 	}
 	
 	public void stopGame() {
-		inGame = false;
+		scoreboard.finished();
 		timer.stop();
 	}
 }

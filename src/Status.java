@@ -5,21 +5,32 @@ public class Status extends JLabel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	int counter = 0;
+	private int counter = 0;
+	private boolean victory = false;
     public Status()
     {
         super();
         counter = 0;
-        setText("Bouncy Points: " + counter + " points");
+        setText("SCORE: " + counter);
     }
     public void advanceCounter()
     {
         counter++;
-        setText("Bouncy Points: " + counter + " points");
+        setText("SCORE: " + counter);
     }
+    
     public void resetCounter()
     {
         counter = 0;
-        setText("Bouncy Points: " + counter + " points");
+        setText("SCORE: " + counter);
+    }
+    
+    public void victory() {
+    	victory = true;
+    }
+    
+    public void finished() {
+    	if (victory) setText("Victory! FINAL SCORE: " + counter);
+    	else setText("Game Over. FINAL SCORE: " + counter);
     }
 }

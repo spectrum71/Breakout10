@@ -1,8 +1,11 @@
-import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 
 public class Game extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Game() {
 		super("Breakout 1.0");
 		setTitle("Breakout 1.0");
